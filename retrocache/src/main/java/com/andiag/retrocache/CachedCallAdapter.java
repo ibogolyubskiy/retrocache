@@ -1,5 +1,7 @@
 package com.andiag.retrocache;
 
+import android.support.annotation.NonNull;
+
 import com.iagocanalejas.dualcache.interfaces.Cache;
 
 import java.lang.annotation.Annotation;
@@ -32,13 +34,14 @@ final class CachedCallAdapter<T> implements CallAdapter<T, Cached<T>> {
         this.mReturnType = returnType;
     }
 
+    @NonNull
     @Override
     public Type responseType() {
         return ((ParameterizedType) mReturnType).getActualTypeArguments()[0];
     }
 
     @Override
-    public Cached<T> adapt(Call<T> call) {
+    public Cached<T> adapt(@NonNull Call<T> call) {
         return new CachedCall<>(mExecutor, call, responseType(), mAnnotations, mRetrofit, mCachingSystem);
     }
 }

@@ -1,5 +1,7 @@
 package com.andiag.retrocache;
 
+import android.support.annotation.NonNull;
+
 import com.andiag.commons.CacheUtils;
 import com.iagocanalejas.dualcache.interfaces.Cache;
 
@@ -78,7 +80,7 @@ final class CachedCall<T> implements Cached<T> {
     private void networkLoad(final Callback<T> callback, final boolean isRefresh) {
         mCall.enqueue(new Callback<T>() {
             @Override
-            public void onResponse(final Call<T> call, final Response<T> response) {
+            public void onResponse(@NonNull final Call<T> call, @NonNull final Response<T> response) {
                 mExecutor.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -100,7 +102,7 @@ final class CachedCall<T> implements Cached<T> {
             }
 
             @Override
-            public void onFailure(final Call<T> call, final Throwable t) {
+            public void onFailure(@NonNull final Call<T> call, @NonNull final Throwable t) {
                 mExecutor.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -118,7 +120,7 @@ final class CachedCall<T> implements Cached<T> {
     private void delegate(final Callback<T> callback) {
         mCall.enqueue(new Callback<T>() {
             @Override
-            public void onResponse(final Call<T> call, final Response<T> response) {
+            public void onResponse(@NonNull final Call<T> call, @NonNull final Response<T> response) {
                 mExecutor.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -128,7 +130,7 @@ final class CachedCall<T> implements Cached<T> {
             }
 
             @Override
-            public void onFailure(final Call<T> call, final Throwable t) {
+            public void onFailure(@NonNull final Call<T> call, @NonNull final Throwable t) {
                 mExecutor.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -140,10 +142,7 @@ final class CachedCall<T> implements Cached<T> {
     }
 
     @Override
-    public void enqueue(final Callback<T> callback) {
-        if (callback == null) {
-            throw new NullPointerException("callback == null");
-        }
+    public void enqueue(@NonNull final Callback<T> callback) {
         if (mExecuted || mCall.isExecuted()) {
             throw new IllegalStateException("Already executed.");
         }
@@ -196,12 +195,14 @@ final class CachedCall<T> implements Cached<T> {
         return mRequest.newBuilder().build();
     }
 
+    @NonNull
     @Override
     public Cached<T> clone() {
         return new CachedCall<>(mExecutor, mCall.clone(), responseType(),
                 mAnnotations, mRetrofit, mCachingSystem);
     }
 
+    @NonNull
     @Override
     public Response<T> execute() throws IOException {
         if (mExecuted || mCall.isExecuted()) {

@@ -49,7 +49,8 @@ final class CallExecuteObservable<T> extends Observable<Response<T>> {
         this.mResponseType = responseType;
         this.mRetrofit = retrofit;
 
-        this.mCachingActive = mOriginalCall.request() != null && mOriginalCall.request().method().equals("GET");
+        mOriginalCall.request();
+        this.mCachingActive = mOriginalCall.request().method().equals("GET");
     }
 
 

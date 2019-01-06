@@ -32,7 +32,7 @@ final class ResultObservable<T> extends Observable<Result<T>> {
 
     @Override
     protected void subscribeActual(Observer<? super Result<T>> observer) {
-        mUpstream.subscribe(new ResultObserver<T>(observer));
+        mUpstream.subscribe(new ResultObserver<>(observer));
     }
 
     private static class ResultObserver<R> implements Observer<Response<R>> {

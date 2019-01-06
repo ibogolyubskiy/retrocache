@@ -79,7 +79,7 @@ public final class RxJava2CachedCallAdapterFactory extends CallAdapter.Factory {
     }
 
     @Override
-    public CallAdapter<?, ?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
+    public CallAdapter<?, ?> get(@NonNull Type returnType, @NonNull Annotation[] annotations, @NonNull Retrofit retrofit) {
         Class<?> rawType = getRawType(returnType);
 
         if (rawType == Completable.class) {

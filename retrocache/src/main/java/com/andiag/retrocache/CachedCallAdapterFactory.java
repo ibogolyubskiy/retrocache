@@ -50,7 +50,7 @@ public class CachedCallAdapterFactory extends CallAdapter.Factory {
     }
 
     @Override
-    public CallAdapter<Cached<?>, ?> get(final Type returnType, final Annotation[] annotations, final Retrofit retrofit) {
+    public CallAdapter<Cached<?>, ?> get(@NonNull final Type returnType, @NonNull final Annotation[] annotations, @NonNull final Retrofit retrofit) {
 
         TypeToken<?> token = TypeToken.of(returnType);
         if (token.getRawType() != Cached.class) {

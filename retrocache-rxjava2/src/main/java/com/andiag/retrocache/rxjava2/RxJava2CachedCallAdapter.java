@@ -15,6 +15,8 @@
  */
 package com.andiag.retrocache.rxjava2;
 
+import android.support.annotation.NonNull;
+
 import com.iagocanalejas.dualcache.interfaces.Cache;
 
 import java.lang.annotation.Annotation;
@@ -60,13 +62,15 @@ final class RxJava2CachedCallAdapter<R> implements CallAdapter<R, Object> {
         this.mCompletable = mCompletable;
     }
 
+    @NonNull
     @Override
     public Type responseType() {
         return mResponseType;
     }
 
+    @NonNull
     @Override
-    public Object adapt(Call<R> call) {
+    public Object adapt(@NonNull Call<R> call) {
         Observable<Response<R>> responseObservable = mAsync
                 ? new CallEnqueueObservable<>(mCachingSystem, call, mResponseType, mAnnotations, mRetrofit)
                 : new CallExecuteObservable<>(mCachingSystem, call, mResponseType, mAnnotations, mRetrofit);

@@ -1,6 +1,8 @@
 package com.andiag.retrocache;
 
 
+import android.support.annotation.NonNull;
+
 import java.lang.reflect.Type;
 
 import okhttp3.Request;
@@ -35,6 +37,7 @@ public interface Cached<T> extends Call<T>, Cloneable {
      * Create a new, identical call to this one which can be enqueued or executed even if this call
      * has already been.
      */
+    @NonNull
     Cached<T> clone();
 
 }

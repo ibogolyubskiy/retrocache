@@ -15,6 +15,8 @@
  */
 package com.andiag.retrocache.rxjava2;
 
+import android.support.annotation.NonNull;
+
 import com.andiag.commons.CacheUtils;
 import com.iagocanalejas.dualcache.interfaces.Cache;
 
@@ -49,7 +51,8 @@ final class CallEnqueueObservable<T> extends Observable<Response<T>> {
         this.mResponseType = responseType;
         this.mRetrofit = retrofit;
 
-        this.mCachingActive = mOriginalCall.request() != null && mOriginalCall.request().method().equals("GET");
+        mOriginalCall.request();
+        this.mCachingActive = mOriginalCall.request().method().equals("GET");
     }
 
     @Override
@@ -93,7 +96,7 @@ final class CallEnqueueObservable<T> extends Observable<Response<T>> {
         }
 
         @Override
-        public void onResponse(Call<T> call, Response<T> response) {
+        public void onResponse(Call<T> call, @NonNull Response<T> response) {
             if (call.isCanceled()) {
                 return;
             }
@@ -125,7 +128,7 @@ final class CallEnqueueObservable<T> extends Observable<Response<T>> {
         }
 
         @Override
-        public void onFailure(Call<T> call, Throwable t) {
+        public void onFailure(Call<T> call, @NonNull Throwable t) {
             if (call.isCanceled()) {
                 return;
             }
